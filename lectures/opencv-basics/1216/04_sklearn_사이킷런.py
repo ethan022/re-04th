@@ -180,3 +180,48 @@ print(f'스케일링 후: {model.score(x_test_scaled, y_test):.2%}')
 #    - accuracy_score: 전체 정확도
 #    - classification_report: 클래스별 상세 성능
 #    - precision, recall, f1-score 등 확인 가능
+
+# ==================== 실습: Wine 데이터셋으로 모델 비교 ====================
+# 여러 모델을 학습시켜 스케일링 전후 성능 비교
+
+from sklearn.datasets import load_wine
+
+# Wine 데이터셋 로드 (와인 품질 분류)
+wine = load_wine()
+x, y = wine.data, wine.target
+
+# 데이터 분할
+x_train, x_test, y_train, y_test = train_test_split(
+    x, y, test_size=0.2, stratify=y, random_state=42
+)
+
+# 비교할 모델들
+models = {
+    "KNN": KNeighborsClassifier(n_neighbors=5),
+    'Logistic': LogisticRegression(max_iter=100),
+    'DecisionTree': DecisionTreeClassifier(random_state=42),
+    'RandomForest': RandomForestClassifier(random_state=42),
+    'SVC': SVC()
+}
+
+# 스케일링 전 성능
+print('\n========== 스케일링 전 ==========')
+for name, model in models.items():
+    model.fit(x_train, y_train)
+    print(f'{name:15s}: {model.score(x_test, y_test):.2%}')
+
+# 데이터 스케일링
+scaler = StandardScaler()
+x_train_scaled = scaler.fit_transform(x_train)
+x_test_scaled = scaler.transform(x_test)
+
+# 스케일링 후 성능
+print('\n========== 스케일링 후 ==========')
+for name, model in models.items():
+    model.fit(x_train_scaled, y_train)
+    print(f'{name:15s}: {model.score(x_test_scaled, y_test):.2%}')
+
+# 결과 분석:
+# - KNN, SVC는 스케일링 후 성능이 크게 향상
+# - DecisionTree, RandomForest는 스케일링 영향 거의 없음
+# - Logistic Regression은 약간 향상
