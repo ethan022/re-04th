@@ -136,7 +136,7 @@ print(f"  R² Score: {r2:.4f}")
 print(f"  → 데이터의 {r2*100:.1f}%를 설명")
 
 if r2 > 0.9:
-    print(f"  → 매우 우수! ✓")
+    print(f"  → 매우 우수")
 elif r2 > 0.7:
     print(f"  → 괜찮음")
 else:

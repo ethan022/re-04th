@@ -140,7 +140,7 @@ print(f'  b = {b:.4f} (목표: 3.0)')
 print(f'  오차: w는 {abs(w-2.0):.4f}, b는 {abs(b-3.0):.4f}')
 
 if abs(w-2.0) < 0.1 and abs(b-3.0) < 0.1:
-    print(f'  → 매우 정확하게 찾음! ✓\n')
+    print(f'  → 매우 정확하게 찾음\n')
 else:
     print(f'  → 더 많은 학습 필요\n')
 
