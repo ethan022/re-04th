@@ -1,240 +1,273 @@
-# 활성화 함수란?
+# 활성화 함수 (Activation Function)
 
-# 뉴런이 "켜질지 말지" 결정하는 스위치!
+# 쉽게 이해하기:
+# 활성화 함수 = 뉴런이 "켜질지 말지" 결정하는 스위치
+# 마치 시험에서 60점 넘으면 합격, 안 넘으면 불합격처럼!
 
-# 비유: 시험 합격/불합격 기준
+# 정의:
+# 뉴런의 출력을 결정하는 비선형 함수
 
-# 시험 점수가 나왔을 때:
-# - 60점 미만: 불합격 (뉴런 꺼짐)
-# - 60점 이상: 합격 (뉴런 켜짐)
-
-# 활성화 함수 = 이런 기준을 정하는 것!
-
-
-# 왜 필요할까?
-
-# 만약 활성화 함수가 없다면?
-
-# 예) 3개 층을 쌓아도:
-# 층1: y = 2x
-# 층2: y = 3y = 3(2x) = 6x
-# 층3: y = 4y = 4(6x) = 24x
-# 결국: y = 24x (그냥 곱셈!)
-
-# 아무리 층을 많이 쌓아도 간단한 계산밖에 못함!
-
-print("=== 활성화 함수 없으면? ===")
-print("입력: 2")
-print("층1: 2 × 2 = 4")
-print("층2: 4 × 3 = 12")
-print("층3: 12 × 4 = 48")
-print()
-print("결과: 2 × 2 × 3 × 4 = 48")
-print("→ 그냥 곱셈만 됩니다!")
-print("→ 복잡한 패턴을 배울 수 없어요")
-print()
+# 역할:
+# 1. 비선형성 도입 (복잡한 패턴 학습 가능)
+# 2. 출력 범위 조절 (너무 크거나 작지 않게)
+# 3. 신호 전달 여부 결정 (켤지 말지)
 
 
-# 활성화 함수를 쓰면?
+# 왜 필요한가?
 
-# 비선형성을 추가!
-# = 복잡한 곡선을 표현할 수 있음
-# = 복잡한 패턴을 학습할 수 있음
+# 쉬운 비유:
+# 활성화 함수 없으면 = 레고를 일자로만 쌓는 것
+# 활성화 함수 있으면 = 레고를 자유롭게 구부려서 복잡한 모양 만들기
 
-print("=== 활성화 함수 있으면? ===")
-print("입력: 2")
-print("층1: 2 × 2 = 4 → ReLU → 4")
-print("층2: 4 × 3 = 12 → ReLU → 12")
-print("층3: 12 × 4 = 48 → ReLU → 48")
-print()
-print("→ 각 층마다 복잡한 변환 가능!")
-print("→ 고양이/강아지 같은 복잡한 것도 구분!")
-print()
+# 수식으로 보기:
+# 선형 함수만 사용하면...
+# 층1: y₁ = W₁x + b₁
+# 층2: y₂ = W₂y₁ + b₂
+#      = W₂(W₁x + b₁) + b₂
+#      = (W₂W₁)x + (W₂b₁ + b₂)
+#      = W'x + b'  ← 결국 한 층짜리와 똑같음!
 
-
-# 주요 활성화 함수들 (쉽게!)
+# 결론: 아무리 층을 쌓아도 단일 선형 변환!
+# → 비선형 함수가 있어야 복잡한 패턴 학습 가능
 
 
-# 1. ReLU (렐루)
-# = 음수는 0으로, 양수는 그대로
+# 주요 활성화 함수들
 
-# 비유: 빚은 탕감!
-# - 마이너스 통장 (-100원) → 0원으로
+
+# 1. ReLU (Rectified Linear Unit) - 가장 많이 사용!
+
+# 수식: ReLU(x) = max(0, x)
+# - x > 0이면: x 그대로
+# - x ≤ 0이면: 0
+
+# 쉬운 비유:
+# ReLU = 빚 탕감
 # - 플러스 통장 (100원) → 그대로 100원
+# - 마이너스 통장 (-100원) → 0원으로 탕감!
 
-# 수식: y = max(0, x)
-# -5 → 0
-#  0 → 0
-#  5 → 5
+# 예시:
+# ReLU(-5) = 0
+# ReLU(0) = 0
+# ReLU(5) = 5
 
-print("=== ReLU 활성화 함수 ===")
-print("입력 -5 → 출력 0")
-print("입력  0 → 출력 0")
-print("입력  5 → 출력 5")
-print()
-print("장점: 계산이 빠름! (단순 비교)")
-print("단점: 음수는 전부 죽어버림")
-print()
+# 장점:
+# - 계산이 매우 빠름 (단순 비교)
+# - 학습이 잘 됨
+# - 기울기 소실 문제 완화
+
+# 단점:
+# - 음수 입력에 대해 뉴런이 "죽을" 수 있음 (Dying ReLU)
 
 
 # 2. Sigmoid (시그모이드)
-# = 모든 값을 0~1 사이로 압축
 
-# 비유: 확률로 변환
+# 수식: σ(x) = 1 / (1 + e^(-x))
+# 출력 범위: (0, 1)
+
+# 쉬운 비유:
+# Sigmoid = 확률 변환기
 # - 큰 양수 → 1에 가까움 (거의 확실)
-# - 큰 음수 → 0에 가까움 (거의 아님)
+# - 큰 음수 → 0에 가까움 (거의 확실하지 않음)
 # - 0 → 0.5 (반반)
 
-print("=== Sigmoid 활성화 함수 ===")
-print("입력 -10 → 출력 0.0000... (거의 0)")
-print("입력   0 → 출력 0.5")
-print("입력  10 → 출력 0.9999... (거의 1)")
-print()
-print("장점: 확률로 해석 가능!")
-print("단점: 학습이 느려질 수 있음")
-print("사용: 주로 마지막 층(출력층)에서")
-print()
+# 예시:
+# σ(-10) ≈ 0.0000
+# σ(0) = 0.5
+# σ(10) ≈ 0.9999
+
+# 장점:
+# - 출력을 확률로 해석 가능 (0~1 사이)
+# - 부드러운 곡선
+
+# 단점:
+# - 기울기 소실 문제 (Vanishing Gradient)
+# - 출력이 0 중심이 아님
+# - 계산이 상대적으로 느림
+
+# 사용처:
+# - 주로 출력층 (이진 분류)
+# - 은닉층에서는 잘 안 씀
 
 
-# 3. Tanh (탄젠트 하이퍼볼릭)
-# = 모든 값을 -1~1 사이로 압축
+# 3. Tanh (하이퍼볼릭 탄젠트)
 
-# Sigmoid와 비슷하지만:
+# 수식: tanh(x) = (e^x - e^(-x)) / (e^x + e^(-x))
+# 출력 범위: (-1, 1)
+
+# Sigmoid와 비슷하지만 범위가 다름:
 # - Sigmoid: 0~1
 # - Tanh: -1~1 (중심이 0)
 
-print("=== Tanh 활성화 함수 ===")
-print("입력 -10 → 출력 -1")
-print("입력   0 → 출력  0")
-print("입력  10 → 출력  1")
-print()
-print("장점: 중심이 0이라 학습이 조금 더 좋음")
-print("사용: 요즘은 ReLU를 더 많이 씀")
-print()
+# 예시:
+# tanh(-10) ≈ -1
+# tanh(0) = 0
+# tanh(10) ≈ 1
+
+# 장점:
+# - 출력이 0 중심 (Sigmoid보다 학습이 조금 더 좋음)
+# - 부드러운 곡선
+
+# 단점:
+# - 여전히 기울기 소실 가능
+# - 요즘은 ReLU를 더 많이 씀
 
 
-# 어떤 활성화 함수를 쓸까?
+# 4. Leaky ReLU
 
-print("=== 활성화 함수 선택 가이드 ===")
-print()
-print("중간 층(은닉층): ReLU 사용!")
-print("→ 가장 많이 쓰임, 빠르고 효과적")
-print()
-print("출력층 (문제 유형별):")
-print("- 이진 분류 (개/고양이): Sigmoid")
-print("  → 0~1 사이 확률로 표현")
-print()
-print("- 다중 분류 (개/고양이/새): Softmax")
-print("  → 여러 클래스의 확률 합=1")
-print()
-print("- 회귀 (숫자 예측): 활성화 함수 없음")
-print("  → 그냥 숫자를 바로 출력")
-print()
+# 수식: LeakyReLU(x) = max(0.01x, x)
+# - x > 0이면: x 그대로
+# - x ≤ 0이면: 0.01x (작은 값 유지)
+
+# ReLU의 "죽는 뉴런" 문제를 해결!
+
+# 예시:
+# LeakyReLU(-5) = -0.05 (완전히 0이 아님!)
+# LeakyReLU(0) = 0
+# LeakyReLU(5) = 5
+
+# 장점:
+# - ReLU의 Dying 문제 해결
+# - 계산 빠름
+
+# 단점:
+# - 0.01 같은 값을 정해야 함
 
 
-# 실제로 사용해보기
+# 5. Softmax - 출력층 전용!
+
+# 수식: Softmax(xᵢ) = e^xᵢ / Σe^xⱼ
+# 출력: 각 클래스의 확률 (합이 1)
+
+# 쉬운 이해:
+# 여러 선택지의 확률로 변환
+# 예) [2.0, 1.0, 0.1] → [0.7, 0.2, 0.1]
+
+# 사용처:
+# - 다중 클래스 분류의 출력층
+# 예) 개/고양이/새 구분
+
+
+# 활성화 함수 선택 가이드
+
+# 은닉층 (중간 층):
+# → ReLU 사용! (기본 선택)
+# → 문제 있으면 Leaky ReLU 시도
+
+# 출력층:
+# - 이진 분류 (개 or 고양이) → Sigmoid
+# - 다중 분류 (개/고양이/새) → Softmax
+# - 회귀 (숫자 예측) → 활성화 함수 없음 (Linear)
+
+
+# 실습 코드
 
 import torch
 import torch.nn as nn
-
-print("=== PyTorch로 활성화 함수 사용 ===")
-print()
-
-# ReLU 테스트
-relu = nn.ReLU()
-test_input = torch.tensor([-2.0, -1.0, 0.0, 1.0, 2.0])
-
-print("입력:", test_input.tolist())
-print("ReLU 출력:", relu(test_input).tolist())
-print("→ 음수는 0, 양수는 그대로!")
-print()
-
-# Sigmoid 테스트
-sigmoid = nn.Sigmoid()
-print("Sigmoid 출력:", [f"{x:.3f}" for x in sigmoid(test_input).tolist()])
-print("→ 모두 0~1 사이로!")
-print()
-
-# Tanh 테스트
-tanh = nn.Tanh()
-print("Tanh 출력:", [f"{x:.3f}" for x in tanh(test_input).tolist()])
-print("→ 모두 -1~1 사이로!")
-print()
-
-
-# 신경망에서 사용하기
-
-print("=== 간단한 신경망 만들기 ===")
-print()
-
-model = nn.Sequential(
-    nn.Linear(10, 20),  # 입력층 → 은닉층
-    nn.ReLU(),          # 활성화! (ReLU)
-    nn.Linear(20, 10),  # 은닉층 → 은닉층
-    nn.ReLU(),          # 활성화! (ReLU)
-    nn.Linear(10, 1),   # 은닉층 → 출력층
-    nn.Sigmoid()        # 활성화! (Sigmoid, 0~1 출력)
-)
-
-print(model)
-print()
-print("설명:")
-print("- 중간층: ReLU 사용 (일반적)")
-print("- 마지막층: Sigmoid 사용 (이진 분류)")
-print()
-
-
-# 시각화 (옵션)
-
 import matplotlib.pyplot as plt
 import numpy as np
 
+# 한글 폰트 설정
 plt.rcParams['font.family'] = 'Malgun Gothic'
 plt.rcParams['axes.unicode_minus'] = False
 
-print("=== 활성화 함수 그래프 그리기 ===")
+# 활성화 함수 테스트
+print("=== 활성화 함수 동작 확인 ===\n")
 
-x = np.linspace(-5, 5, 100)
+# 테스트 입력
+x = torch.tensor([-2.0, -1.0, 0.0, 1.0, 2.0])
+print(f"입력: {x.tolist()}\n")
 
 # ReLU
-relu_y = np.maximum(0, x)
+relu = nn.ReLU()
+print(f"ReLU 출력: {relu(x).tolist()}")
+print("→ 음수는 0, 양수는 그대로\n")
 
 # Sigmoid
-sigmoid_y = 1 / (1 + np.exp(-x))
+sigmoid = nn.Sigmoid()
+print(f"Sigmoid 출력: {[f'{v:.3f}' for v in sigmoid(x).tolist()]}")
+print("→ 모두 0~1 사이로 압축\n")
 
 # Tanh
-tanh_y = np.tanh(x)
+tanh = nn.Tanh()
+print(f"Tanh 출력: {[f'{v:.3f}' for v in tanh(x).tolist()]}")
+print("→ 모두 -1~1 사이로 압축\n")
 
-plt.figure(figsize=(12, 4))
 
-# ReLU 그래프
-plt.subplot(1, 3, 1)
-plt.plot(x, relu_y, 'b-', linewidth=2)
-plt.title('ReLU: 음수는 0')
-plt.xlabel('입력')
+# 신경망에서 사용 예시
+print("=== 신경망에서 활성화 함수 사용 ===\n")
+
+model = nn.Sequential(
+    nn.Linear(10, 20),  # 입력층 → 은닉층
+    nn.ReLU(),          # 활성화 (ReLU)
+    nn.Linear(20, 10),  # 은닉층 → 은닉층
+    nn.ReLU(),          # 활성화 (ReLU)
+    nn.Linear(10, 1),   # 은닉층 → 출력층
+    nn.Sigmoid()        # 활성화 (Sigmoid, 0~1 출력)
+)
+
+print(model)
+print("\n설명:")
+print("- 중간층: ReLU 사용 (표준)")
+print("- 출력층: Sigmoid 사용 (이진 분류)")
+
+
+# 시각화
+print("\n=== 활성화 함수 그래프 ===")
+
+x_range = np.linspace(-5, 5, 100)
+
+# ReLU
+relu_y = np.maximum(0, x_range)
+
+# Sigmoid
+sigmoid_y = 1 / (1 + np.exp(-x_range))
+
+# Tanh
+tanh_y = np.tanh(x_range)
+
+# Leaky ReLU
+leaky_relu_y = np.maximum(0.01 * x_range, x_range)
+
+plt.figure(figsize=(14, 10))
+
+# ReLU
+plt.subplot(2, 2, 1)
+plt.plot(x_range, relu_y, 'b-', linewidth=2)
+plt.title('ReLU: max(0, x)', fontsize=14)
+plt.xlabel('입력 (x)')
 plt.ylabel('출력')
-plt.grid(True)
+plt.grid(True, alpha=0.3)
 plt.axhline(y=0, color='k', linestyle='-', linewidth=0.5)
 plt.axvline(x=0, color='k', linestyle='-', linewidth=0.5)
 
-# Sigmoid 그래프
-plt.subplot(1, 3, 2)
-plt.plot(x, sigmoid_y, 'g-', linewidth=2)
-plt.title('Sigmoid: 0~1로 압축')
-plt.xlabel('입력')
+# Sigmoid
+plt.subplot(2, 2, 2)
+plt.plot(x_range, sigmoid_y, 'g-', linewidth=2)
+plt.title('Sigmoid: 1/(1+e^(-x))', fontsize=14)
+plt.xlabel('입력 (x)')
 plt.ylabel('출력')
-plt.grid(True)
+plt.grid(True, alpha=0.3)
 plt.axhline(y=0, color='k', linestyle='-', linewidth=0.5)
 plt.axvline(x=0, color='k', linestyle='-', linewidth=0.5)
 plt.axhline(y=0.5, color='r', linestyle='--', alpha=0.5)
 
-# Tanh 그래프
-plt.subplot(1, 3, 3)
-plt.plot(x, tanh_y, 'r-', linewidth=2)
-plt.title('Tanh: -1~1로 압축')
-plt.xlabel('입력')
+# Tanh
+plt.subplot(2, 2, 3)
+plt.plot(x_range, tanh_y, 'r-', linewidth=2)
+plt.title('Tanh: (e^x - e^(-x))/(e^x + e^(-x))', fontsize=14)
+plt.xlabel('입력 (x)')
 plt.ylabel('출력')
-plt.grid(True)
+plt.grid(True, alpha=0.3)
+plt.axhline(y=0, color='k', linestyle='-', linewidth=0.5)
+plt.axvline(x=0, color='k', linestyle='-', linewidth=0.5)
+
+# Leaky ReLU
+plt.subplot(2, 2, 4)
+plt.plot(x_range, leaky_relu_y, 'm-', linewidth=2)
+plt.title('Leaky ReLU: max(0.01x, x)', fontsize=14)
+plt.xlabel('입력 (x)')
+plt.ylabel('출력')
+plt.grid(True, alpha=0.3)
 plt.axhline(y=0, color='k', linestyle='-', linewidth=0.5)
 plt.axvline(x=0, color='k', linestyle='-', linewidth=0.5)
 
@@ -242,30 +275,19 @@ plt.tight_layout()
 plt.show()
 
 
-# 핵심 정리
-
+# 요약 정리
 print("\n" + "="*60)
 print("핵심 정리")
 print("="*60)
-print()
-print("1. 활성화 함수 = 뉴런이 켜질지 결정하는 스위치")
-print()
-print("2. 왜 필요? → 복잡한 패턴 학습을 위해!")
-print()
-print("3. ReLU (가장 많이 씀)")
-print("   - 음수 → 0, 양수 → 그대로")
-print("   - 중간층에서 사용")
-print()
-print("4. Sigmoid")
-print("   - 0~1로 압축")
-print("   - 출력층(이진 분류)에서 사용")
-print()
-print("5. 기본 선택: 중간층은 ReLU, 출력층은 문제에 맞게!")
-print()
-print("="*60)
-print()
-print("비유로 기억하기:")
-print("- ReLU = 빚은 탕감 (음수는 0)")
-print("- Sigmoid = 확률 변환 (0~1)")
-print("- 활성화 함수 = 합격/불합격 기준")
+print("\n1. 활성화 함수 = 비선형성을 추가해서 복잡한 패턴 학습")
+print("\n2. ReLU: max(0, x)")
+print("   - 가장 많이 사용")
+print("   - 은닉층의 기본 선택")
+print("\n3. Sigmoid: 0~1 출력")
+print("   - 이진 분류 출력층")
+print("\n4. Softmax: 확률 분포 출력 (합=1)")
+print("   - 다중 클래스 분류 출력층")
+print("\n5. 기본 전략:")
+print("   - 은닉층: ReLU")
+print("   - 출력층: 문제에 따라 선택")
 print("="*60)
