@@ -25,3 +25,13 @@ Thumbs.db
 # *.csv
 # *.xlsx
 # *.json
+
+# OpenCV 학습 자료 출력 파일 (실습 중 생성되는 파일들)
+lectures/opencv-basics/output.jpg
+lectures/opencv-basics/output.mp4
+lectures/opencv-basics/recording.mp4
+lectures/opencv-basics/low_quality.jpg
+lectures/opencv-basics/high_quality.jpg
+lectures/opencv-basics/fast_png.png
+lectures/opencv-basics/small_png.png
+lectures/opencv-basics/data/
