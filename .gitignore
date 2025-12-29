@@ -35,3 +35,10 @@ lectures/opencv-basics/high_quality.jpg
 lectures/opencv-basics/fast_png.png
 lectures/opencv-basics/small_png.png
 lectures/opencv-basics/data/
+
+# 1229 학습 자료 실행 시 생성되는 테스트 파일들
+lectures/opencv-basics/Photo_*.jpg
+lectures/opencv-basics/test*.jpg
+lectures/opencv-basics/test*.png
+lectures/opencv-basics/original.mp4
+lectures/opencv-basics/speed_*.mp4
